@@ -1,7 +1,7 @@
 import { Telegraf, Markup } from "telegraf";
 
 const bot = new Telegraf("6870648634:AAHEELMLK_tpcw2gLQlq7UkGNmXyb74hHRw")
-const Modelos = [
+const OnlyFans = [
     "Anitta",
     "Belle Belinha",
     "Belle Delphine",
@@ -9,6 +9,9 @@ const Modelos = [
     "Kinechan",
     "Sarah Estanislau"
 ]
+// const Vazados = [
+//     "Escola erome",
+// ]
 let pedido = ``
 
 bot.start((ctx)=>{
@@ -18,12 +21,13 @@ bot.start((ctx)=>{
     }
     else
     {
-        ctx.reply("Bem vindo bot de atendimentos da BZNTVIP.\nSelecione uma das opções abaixo", {
+        ctx.reply("Bem vindo! Me chamo BONBOT e sou o bot de atendimentos da BZNTVIP 😉.\n\nSelecione uma das opções abaixo para prosseguir:", {
             reply_markup: {
                 inline_keyboard: [
                   [{ text: 'Fazer Pedido - 📝', callback_data: 'fp' }],
-                  [{ text: 'Lista de packs - 🗃️', callback_data: 'lm' }],
-                  [{ text: 'Info - Promoção - 🌟', callback_data: 'ip' }],
+                  [{ text: 'Lista de packs (OFS) - 🗃️', callback_data: 'lpo' }],
+                //[{ text: 'Lista de packs (VZDS) - 🗃️', callback_data: 'lpv' }],
+                  [{ text: 'Info Promoção - 🌟', callback_data: 'ip' }],
                   [{ text: 'Perguntas frequentes - ❓', callback_data: 'pf' }]
                 ]
               }
@@ -31,13 +35,21 @@ bot.start((ctx)=>{
     }
 })
 
-bot.action("lm", (ctx)=>{
-    let resposta = `🗃️ Lista de Packs 🗃️\n \n`
-    for (let i = 0; i<Modelos.length; i++){
-        resposta += `${i+1} - ${Modelos[i]} \n`
+bot.action("lpo", (ctx)=>{
+    let resposta = `🗃️ Lista de Packs (OFS) 🗃️\n \n`
+    for (let i = 0; i<OnlyFans.length; i++){
+        resposta += `${i+1} : ${OnlyFans[i]} \n`
     }
     ctx.reply(resposta)
 })
+
+// bot.action("lpv", (ctx)=>{
+//     let resposta = `🗃️ Lista de Packs (VZDS) 🗃️\n \n`
+//     for (let i = 0; i<Vazados.length; i++){
+//         resposta += `(${i+1}) : ${Vazados[i]} \n`
+//     }
+//     ctx.reply(resposta)
+// })
 
 bot.action("fp", ctx=>{ctx.reply("Qual pack você deseja?\n(Favor inserir nome do pack corretamente)")})
 
@@ -77,22 +89,35 @@ bot.action("ip", ctx=>{
 
 bot.on("text", (ctx)=>
 {
-    for (let i = 0; i < Modelos.length; i++)
+    if(ctx.chat.id === 6579060146){ctx.reply("Você não pode fazer pedidos para você mesmo!")}
+    else{
+        for (let i = 0; i < OnlyFans.length; i++)
     {
         var modelo = ctx.message.text
         modelo = modelo.toLowerCase()
-        if (modelo.includes(Modelos[i].toLowerCase()))
+        if (modelo.includes(OnlyFans[i].toLowerCase()))
         {
             const Pnome = ctx.message.chat.first_name
             var Unome = ctx.message.chat.last_name
-
+            const username = ctx.message.chat.username
+            const chatlink = `t.me/${ctx.message.chat.username}`
             Unome == undefined ? Unome = '' : Unome = Unome
 
-            pedido += `Pack : ${modelo}\n`
-            pedido += `Usuario : ${ctx.message.chat.username}\n`
-            pedido += `Nome : ${Pnome} ${Unome}\n`
-            pedido += `Id : ${ctx.message.chat.id}\n`
-            pedido += `Chat : t.me/${ctx.message.chat.username}`
+            pedido += `🗃️ - Pack : ${modelo.toUpperCase()}\n`
+            pedido += `❓ - Tipo : ONLYFANS\n`
+            pedido += `🪪 - Nome : ${Pnome} ${Unome}\n`
+            
+            if(username === undefined)
+            {
+                pedido+="🪪 - Usuario : Sem nome de usuario"
+            }else
+            {
+                pedido+=`🪪 - Usuario : ${username}\nChat : t.me/${username}\n`
+            } 
+            pedido += `💳 - Id : ${ctx.message.chat.id}\n`
+            pedido += `🕰️ - Horario : ${new Date().getHours()}:${new Date().getMinutes()}`
+
+
             bot.telegram.sendMessage(6579060146, "🤑 : Pedido recebido!")
             setTimeout(() => {
                 bot.telegram.sendMessage(6579060146, pedido)
@@ -100,6 +125,37 @@ bot.on("text", (ctx)=>
 
             ctx.reply("✅ PEDIDO ENVIADO ✅\n\nAguarde um de nossos adms lhe responder!")
         }
+        // else if (modelo.includes(Vazados[i].toLowerCase())){
+        //     const Pnome = ctx.message.chat.first_name
+        //     const tipo = "default"
+        //     var Unome = ctx.message.chat.last_name
+        //     const username = ctx.message.chat.username
+        //     const chatlink = `t.me/${ctx.message.chat.username}`
+        //     Unome == undefined ? Unome = '' : Unome = Unome
+
+        //     pedido += `🗃️ - Pack : ${modelo.toUpperCase()}\n`
+        //     pedido += `❓ - Tipo : VAZADOS`
+        //     pedido += `🪪 - Nome : ${Pnome} ${Unome}\n`
+            
+        //     if(username === undefined)
+        //     {
+        //         pedido+="🪪 - Usuario : Sem nome de usuario"
+        //     }else
+        //     {
+        //         pedido+=`🪪 - Usuario : ${username}\n📲 - Chat : ${chatlink}\n`
+        //     } 
+        //     pedido += `💳 - Id : ${ctx.message.chat.id}\n`
+        //     pedido += `🕰️ - Horario : ${new Date().getHours()}:${new Date().getMinutes()}`
+
+
+        //     bot.telegram.sendMessage(6579060146, "🤑 : Pedido recebido!")
+        //     setTimeout(() => {
+        //         bot.telegram.sendMessage(6579060146, pedido)
+        //     }, 500);
+
+        //     ctx.reply("✅ PEDIDO ENVIADO ✅\n\nAguarde um de nossos adms lhe responder!")
+        // }
+    }
     }
 })
 
