@@ -16,9 +16,10 @@ bot.start((ctx)=>{
             ctx.reply(`👋 Bem vindo ${ctx.chat.first_name}!\n\n🤖 Me chamo BONBOT, e serei seu bot de suporte da UNNREALVIP. Aqui você pode ter acesso as respostas de perguntas frequentes, Visualizar a lista de packs disponiveis.\n\n🚀 Selecione uma das opções abaixo para prosseguir: 🚀`, {
             reply_markup: {
                 inline_keyboard: [
-                  [{ text: '(🔥) - Packs', callback_data: 'ldp' }],
-                  [{ text: '(❓) - Perguntas frequentes', callback_data: 'pf' }],
-                  [{ text: '(😍) - Doação', callback_data: "fd"}]
+                  [{ text: '( 🔥 ) - Packs', callback_data: 'ldp' }],
+                  [{ text: '( ❓ ) - Perguntas', callback_data: 'pf' }],
+                  [{ text: '( 📸 ) - Provas', url: 't.me/unnrealprovas' }],
+                  [{ text: '( 😍 ) - Doação', callback_data: "fd"}]
                 ]
             }
         })
@@ -28,7 +29,7 @@ bot.start((ctx)=>{
     }
 })
 bot.action("ldp", (ctx)=>{
-    let resposta = ` 🔥 Packs 🔥\n_______________________\n\n`
+    let resposta = ` 🔥 Packs 🔥\n_______________\n\n`
     for (let i = 0; i<OnlyFans.length; i++){
         resposta += `( ${i+1} ) - ${OnlyFans[i]} \n`
     }
